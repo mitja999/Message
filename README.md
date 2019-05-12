@@ -1,0 +1,1 @@
+Send Message Project, using .net core 3 and 7.2
