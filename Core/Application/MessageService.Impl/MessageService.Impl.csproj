@@ -1,0 +1,12 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Domain\MessageManagement\MessageManagement.csproj" />
+    <ProjectReference Include="..\MessageService.Interfaces\MessageService.Interfaces.csproj" />
+  </ItemGroup>
+
+</Project>

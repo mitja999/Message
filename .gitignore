@@ -3,3 +3,5 @@
 ################################################################################
 
 /MessageManagement.Interfaces/bin/Debug/netcoreapp3.0
+/MessageManagement.Interfaces/obj
+/.vs
