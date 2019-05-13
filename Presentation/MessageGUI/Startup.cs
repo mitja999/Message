@@ -4,11 +4,13 @@ using Microsoft.AspNetCore.SpaServices.AngularCli;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using System.Diagnostics;
 
 namespace MessageGUI
 {
     public class Startup
     {
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -19,9 +21,6 @@ namespace MessageGUI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc(options => options.EnableEndpointRouting = false)
-                .AddNewtonsoftJson();
-
             // In production, the Angular files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
             {
@@ -44,13 +43,6 @@ namespace MessageGUI
             app.UseStaticFiles();
             app.UseSpaStaticFiles();
 
-            app.UseMvc(routes =>
-            {
-                routes.MapRoute(
-                    name: "default",
-                    template: "{controller}/{action=Index}/{id?}");
-            });
-
             app.UseSpa(spa =>
             {
                 // To learn more about options for serving an Angular SPA from ASP.NET Core,
@@ -64,5 +56,6 @@ namespace MessageGUI
                 }
             });
         }
+
     }
 }

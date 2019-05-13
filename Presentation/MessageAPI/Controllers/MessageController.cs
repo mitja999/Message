@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using MessageManagement.Interfaces.Entities;
 using MessageService.Interfaces;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MessageAPI.Controllers
@@ -13,6 +14,7 @@ namespace MessageAPI.Controllers
     public class MessageController : ControllerBase
     {
         IMessageService _messageController { get; set; }
+
         public MessageController(IMessageService messageController)
         {
             _messageController = messageController;

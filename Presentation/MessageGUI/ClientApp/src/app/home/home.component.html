@@ -1,0 +1,18 @@
+<table class='table table-striped' *ngIf="messages">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Template</th>
+      <th>Type</th>
+      <th>State</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let message of messages">
+      <td>{{ message.name }}</td>
+      <td>{{ message.template }}</td>
+      <td>{{ message.type }}</td>
+      <td>{{ message.state }}</td>
+    </tr>
+  </tbody>
+</table>

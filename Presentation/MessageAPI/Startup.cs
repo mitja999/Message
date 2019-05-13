@@ -35,6 +35,13 @@ namespace MessageAPI
             // Add DbContext using SQL Server Provider
             services.AddDbContext<IMessageDbContext, MessageDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("MessageDatabase")));
+
+            services.AddCors(o => o.AddPolicy("MyPolicy", builder =>
+            {
+                builder.AllowAnyOrigin()
+                       .AllowAnyMethod()
+                       .AllowAnyHeader();
+            }));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -44,10 +51,11 @@ namespace MessageAPI
             {
                 app.UseDeveloperExceptionPage();
             }
-
             app.UseRouting();
 
             app.UseAuthorization();
+
+            app.UseCors("MyPolicy");
 
             app.UseEndpoints(endpoints =>
             {
