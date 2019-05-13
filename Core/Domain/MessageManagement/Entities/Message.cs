@@ -5,6 +5,9 @@ using System.Text;
 
 namespace MessageManagement.Interfaces.Entities
 {
+    /// <summary>
+    /// Message
+    /// </summary>
     public class Message
     {
         public Message()

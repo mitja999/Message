@@ -13,7 +13,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MessageAPI", "Presentation\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MessageService.Impl", "Core\Application\MessageService.Impl\MessageService.Impl.csproj", "{8034D06C-5458-4E6E-B584-F5FA63C0F144}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MessageManagement", "Core\Domain\MessageManagement\MessageManagement.csproj", "{D700806F-77BE-41E4-BA6F-A57CB490AD8F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MessageManagement.Interfaces", "Core\Domain\MessageManagement\MessageManagement.Interfaces.csproj", "{D700806F-77BE-41E4-BA6F-A57CB490AD8F}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Application", "Application", "{92BCA25F-19E9-47DF-8CC8-1864DDDD5370}"
 EndProject
@@ -27,6 +27,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MessageInfrastructure", "In
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{FC6F62AA-B757-4B18-B8CA-EBBCE75CFA64}"
 	ProjectSection(SolutionItems) = preProject
+		Core\Domain\MessageManagement\.gitignore = Core\Domain\MessageManagement\.gitignore
 		README.md = README.md
 	EndProjectSection
 EndProject

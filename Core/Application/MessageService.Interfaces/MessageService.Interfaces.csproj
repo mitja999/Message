@@ -9,7 +9,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Domain\MessageManagement\MessageManagement.csproj" />
+    <ProjectReference Include="..\..\Domain\MessageManagement\MessageManagement.Interfaces.csproj" />
   </ItemGroup>
 
 </Project>

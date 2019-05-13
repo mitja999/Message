@@ -51,10 +51,15 @@ namespace MessageAPI
             {
                 app.UseDeveloperExceptionPage();
             }
+
             app.UseRouting();
+
+            //implementation of error handling
+            app.UseMiddleware<ErrorHandlingMiddleware>();
 
             app.UseAuthorization();
 
+            //enable CORS
             app.UseCors("MyPolicy");
 
             app.UseEndpoints(endpoints =>

@@ -5,7 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Domain\MessageManagement\MessageManagement.csproj" />
+    <ProjectReference Include="..\..\Domain\MessageManagement\MessageManagement.Interfaces.csproj" />
     <ProjectReference Include="..\MessageService.Interfaces\MessageService.Interfaces.csproj" />
   </ItemGroup>
 

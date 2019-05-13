@@ -16,7 +16,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Core\Application\MessageService.Interfaces\MessageService.Interfaces.csproj" />
-    <ProjectReference Include="..\..\Core\Domain\MessageManagement\MessageManagement.csproj" />
+    <ProjectReference Include="..\..\Core\Domain\MessageManagement\MessageManagement.Interfaces.csproj" />
   </ItemGroup>
 
 </Project>
