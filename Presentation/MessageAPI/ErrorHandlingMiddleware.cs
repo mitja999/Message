@@ -25,6 +25,8 @@ namespace MessageAPI
 
         public async Task Invoke(HttpContext context)
         {
+            _logger.LogInformation("Entering {0}({1})",context.Request.Method, context.Request.Path);
+
             try
             {
                 await _next(context);
@@ -35,6 +37,8 @@ namespace MessageAPI
 
                 await HandleExceptionAsync(context, ex);
             }
+            _logger.LogInformation("Exiting {0}({1})({2})", context.Request.Method, context.Request.Path, context.Response.StatusCode);
+
         }
 
         private static Task HandleExceptionAsync(HttpContext context, Exception exception)

@@ -43,7 +43,6 @@ namespace MessageService.Impl
                 messages.Page = page;
                 messages.PageSize = pageSize;
                 messages.TotalCount = _messageDbContext.Messages.Local.Count;
-                
             }, "GetMessages", page, pageSize);
             return result;
         }
