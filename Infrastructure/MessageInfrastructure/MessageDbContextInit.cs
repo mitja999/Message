@@ -1,4 +1,5 @@
 ﻿using MessageManagement.Interfaces.Entities;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,6 +14,10 @@ namespace MessageInfrastructure
         public static void Initialize(MessageDbContext context)
         {
             var init = new MessageDbContextInit();
+            //load data and add to cache
+            context.Messages.Load();
+            context.Users.Load();
+            context.MessageUser.Load();
             init.InsertDefaultData(context);
         }
 
@@ -25,9 +30,9 @@ namespace MessageInfrastructure
             {
                 var messages = new[]
                 {
-                new Message{Name="test",State=1,Template="Sample template",Type=1},
-                new Message{Name="test2",State=1,Template="Sample template2",Type=1}
-            };
+                    new Message{Name="test",State=1,Template="Sample template",Type=1},
+                    new Message{Name="test2",State=1,Template="Sample template2",Type=1}
+                };
                 context.Messages.AddRange(messages);
                 context.SaveChanges();
             }
@@ -58,13 +63,13 @@ namespace MessageInfrastructure
             {
                 var messageUser = new[]
                 {
-                    new MessageUser{MessageId=context.Messages.ElementAt(0).Id,UserId=context.Users.ElementAt(0).Id},
-                    new MessageUser{MessageId=context.Messages.ElementAt(0).Id,UserId=context.Users.ElementAt(1).Id},
-                    new MessageUser{MessageId=context.Messages.ElementAt(0).Id,UserId=context.Users.ElementAt(2).Id},
-                    new MessageUser{MessageId=context.Messages.ElementAt(0).Id,UserId=context.Users.ElementAt(3).Id},
-                    new MessageUser{MessageId=context.Messages.ElementAt(0).Id,UserId=context.Users.ElementAt(3).Id},
-                    new MessageUser{MessageId=context.Messages.ElementAt(0).Id,UserId=context.Users.ElementAt(4).Id},
-                    new MessageUser{MessageId=context.Messages.ElementAt(0).Id,UserId=context.Users.ElementAt(5).Id}
+                    new MessageUser{MessageId=context.Messages.Find(2).Id,UserId=context.Users.Find(6).Id},
+                    new MessageUser{MessageId=context.Messages.Find(2).Id,UserId=context.Users.Find(1).Id},
+                    new MessageUser{MessageId=context.Messages.Find(2).Id,UserId=context.Users.Find(2).Id},
+                    new MessageUser{MessageId=context.Messages.Find(2).Id,UserId=context.Users.Find(3).Id},
+                    new MessageUser{MessageId=context.Messages.Find(1).Id,UserId=context.Users.Find(3).Id},
+                    new MessageUser{MessageId=context.Messages.Find(1).Id,UserId=context.Users.Find(4).Id},
+                    new MessageUser{MessageId=context.Messages.Find(1).Id,UserId=context.Users.Find(5).Id}
                 };
                 context.MessageUser.AddRange(messageUser);
                 context.SaveChanges();

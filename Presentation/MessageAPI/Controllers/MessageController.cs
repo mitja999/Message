@@ -29,46 +29,40 @@ namespace MessageAPI.Controllers
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(PagedList<Message>))]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public ActionResult <PagedList<Message>> Get(int page, int pageSize)
+        public ActionResult <PagedList<Message>> FindMessages(int page, int pageSize)
         {
 
-            var messages = Execute<PagedList<Message>>((response) =>
-            {
-
-                var res = _messageController.GetMessages(page, pageSize);
-                response.Items = res.Items;
-                response.Page = res.Page;
-                response.PageSize = res.PageSize;
-                response.TotalCount = res.TotalCount;
-
-            }, "Get", page, pageSize);
-            return messages;
+            return _messageController.GetMessages(page, pageSize);
 
         }
 
         // GET api/message/5
         [HttpGet("{id}")]
-        public ActionResult<string> Get(int id)
+        public ActionResult<MessageExtended> GetMessageExtended(int id)
         {
-            return "value";
+            return _messageController.GetMessageById(id);
         }
 
         // POST api/message
         [HttpPost]
-        public void Post([FromBody] string value)
+        public async Task<ActionResult<Message>> CreateMessageAsync([FromBody] MessageExtended messageExtended)
         {
+            return await _messageController.CreateMessageAsync(messageExtended);
         }
 
         // PUT api/message/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        public async Task<ActionResult<Message>> UpdateMessage(int id, [FromBody]  Message message)
         {
+            return await _messageController.UpdateMessageAsync(message);
+
         }
 
         // DELETE api/message/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public void DeleteMessage(int id)
         {
+            _messageController.DeleteMessageAsync(id);
         }
 
 

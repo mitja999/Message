@@ -7,6 +7,8 @@ using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace MessageService.Impl
 {
@@ -47,6 +49,113 @@ namespace MessageService.Impl
             return result;
         }
 
+        public MessageExtended GetMessageById(int id)
+        {
+
+            var result = Execute<MessageExtended>((message) =>
+            {
+                Message mes = _messageDbContext.Messages.Find(id);
+                if (mes == null)
+                {
+                    mes = _messageDbContext.Messages.Single(s => s.Id == id);
+                }
+                if (mes == null)
+                {
+                    throw new NotFoundException();
+                }
+                message.Id = mes.Id;
+                message.Name = mes.Name;
+                message.State = mes.State;
+                message.Template = mes.Template;
+                message.Type = mes.Type;
+                var mu = _messageDbContext.MessageUser.Where(m => m.MessageId == mes.Id).Select(m => m.UserId).ToList();
+                //var users = _messageDbContext.Users.Where(u => mu.Contains(u.Id)).ToList();
+                message.UserIds = mu;
+
+            }, "GetMessageById", id);
+            return result;
+        }
+
+        public async Task<Message> CreateMessageAsync(MessageExtended messageExtended)
+        {
+            var result = await ExecuteAsync<Message>(async (message) =>
+            {
+                var mes = _messageDbContext.Messages.Add(new Message
+                {
+                    Name = messageExtended.Name,
+                    State = messageExtended.State,
+                    Template = messageExtended.Template,
+                    Type = messageExtended.Type
+                });
+
+                var users = messageExtended.UserIds.Select(
+                    u => new MessageUser() { MessageId = mes.Entity.Id, UserId = u }
+                ).ToArray();
+
+                _messageDbContext.MessageUser.AddRange(users);
+                await _messageDbContext.SaveChangesAsync(CancellationToken.None);
+            }, "GetMessageById", messageExtended);
+            return result;
+        }
+
+        public async Task<Message> UpdateMessageAsync(Message message)
+        {
+            var result = await ExecuteAsync<Message>(async (message) =>
+            {
+                if (_messageDbContext.Messages.Single(s => s.Id == message.Id) != null)
+            {
+
+                _messageDbContext.Messages.Update(message);
+                await _messageDbContext.SaveChangesAsync(CancellationToken.None);
+            }
+            else
+            {
+                throw new NotFoundException();
+            }
+
+            }, "UpdateMessageAsync", message);
+            return result;
+        }
+
+        public async void DeleteMessageAsync(int id)
+        {
+            await ExecuteAsync<Message>(async (message) =>
+            {
+                if (_messageDbContext.Messages.Single(s => s.Id == id) != null)
+                {
+                    var mu = _messageDbContext.MessageUser.Where(m => m.MessageId == id).ToList();
+                    _messageDbContext.MessageUser.RemoveRange(mu);
+                    await _messageDbContext.SaveChangesAsync(CancellationToken.None);
+                }
+                else
+                {
+                    throw new NotFoundException();
+                }
+            }, "DeleteMessageAsync",id);
+        }
+
+
+        private async Task<T> ExecuteAsync<T>(Func<T, Task> action, string methodName, params object[] args) where T : new()
+        {
+            _logger.LogDebug("Entering {0}({1})", methodName, string.Join(", ", args));
+
+           T response = new T();
+
+            try
+            {
+                await action(response);
+            }
+            catch (Exception ex)
+            {
+                throw new CustomException(ex.Message, ex);
+            }
+
+            _logger.LogDebug("Exiting {0} with {1}", methodName, response);
+
+            return response;
+        }
+
+
         private T Execute<T>(Action<T> action, string methodName, params object[] args) where T : new()
         {
             _logger.LogDebug("Entering {0}({1})", methodName, string.Join(", ", args));
@@ -66,6 +175,7 @@ namespace MessageService.Impl
 
             return response;
         }
+
     }
 
 }

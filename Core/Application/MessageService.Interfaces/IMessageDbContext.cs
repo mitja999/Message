@@ -3,6 +3,8 @@ using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Text;
 using MessageManagement.Interfaces.Entities;
+using System.Threading.Tasks;
+using System.Threading;
 
 namespace MessageService.Interfaces
 {
@@ -22,5 +24,8 @@ namespace MessageService.Interfaces
         /// MessageUser DB table
         /// </summary>
         DbSet<MessageUser> MessageUser { get; set; }
+
+
+        Task<int> SaveChangesAsync(CancellationToken cancellationToken);
     }
 }

@@ -12,6 +12,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.EntityFrameworkCore;
 using MessageService.Interfaces;
+using MessageAPI.Extensions;
 
 namespace MessageAPI
 {
@@ -42,6 +43,9 @@ namespace MessageAPI
                        .AllowAnyMethod()
                        .AllowAnyHeader();
             }));
+
+            // Register the Swagger services
+            services.AddSwaggerDocument();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -62,10 +66,15 @@ namespace MessageAPI
             //enable CORS
             app.UseCors("MyPolicy");
 
+            // Register the Swagger generator and the Swagger UI middlewares
+            app.UseSwagger();
+            app.UseSwaggerUi3();
+
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
             });
+
         }
     }
 }
