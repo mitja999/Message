@@ -10,7 +10,7 @@ export class HomeComponent {
 
   constructor(http: HttpClient, @Inject('API_URL') apiHost: string) {
 
-    http.get<PageList>(apiHost +'api/message?page=0&pageSize=10').subscribe(result => {
+    http.get<PageList>(apiHost + 'api/message?page=0&pageSize=10').subscribe(result => {
       this.messages = result.items;
     }, error => console.error(error));
   }

@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  APIHost: 'http://localhost:51169/'
+  APIHost: 'https://ttmessageapi.azurewebsites.net/'
 };
 
 /*
