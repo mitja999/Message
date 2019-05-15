@@ -37,7 +37,7 @@ namespace MessageInfrastructure
                 context.SaveChanges();
             }
 
-            if (context.Messages.Count() == 0)
+            if (context.Users.Count() == 0)
             {
                 var Users = new[]
                 {

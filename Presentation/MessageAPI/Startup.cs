@@ -1,17 +1,18 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using MessageInfrastructure;
+using MessageService.Interfaces;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using Microsoft.EntityFrameworkCore;
-using MessageService.Interfaces;
+using Microsoft.Extensions.Options;
 using MessageAPI.Extensions;
 
 namespace MessageAPI
@@ -28,7 +29,7 @@ namespace MessageAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers().AddNewtonsoftJson();
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
             // Add framework services.
             services.AddTransient<IMessageService, MessageService.Impl.MessageService>();
@@ -49,32 +50,31 @@ namespace MessageAPI
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
             }
+            else
+            {
+                app.UseHsts();
+            }
 
-            app.UseRouting();
-
-            //implementation of error handling
+            ////implementation of error handling
             app.UseMiddleware<ErrorHandlingMiddleware>();
 
-            app.UseAuthorization();
+            ////app.UseAuthorization();
 
-            //enable CORS
+            ////enable CORS
             app.UseCors("MyPolicy");
 
             // Register the Swagger generator and the Swagger UI middlewares
             app.UseSwagger();
             app.UseSwaggerUi3();
 
-            app.UseEndpoints(endpoints =>
-            {
-                endpoints.MapControllers();
-            });
-
+            app.UseHttpsRedirection();
+            app.UseMvc();
         }
     }
 }

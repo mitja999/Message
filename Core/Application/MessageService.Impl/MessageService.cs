@@ -100,7 +100,7 @@ namespace MessageService.Impl
 
         public async Task<Message> UpdateMessageAsync(Message message)
         {
-            var result = await ExecuteAsync<Message>(async (message) =>
+            var result = await ExecuteAsync<Message>(async (mes) =>
             {
                 if (_messageDbContext.Messages.Single(s => s.Id == message.Id) != null)
             {

@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using MessageManagement.Interfaces.Entities;
 using MessageService.Interfaces;
 using MessageService.Interfaces.Models;
-using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -29,7 +25,7 @@ namespace MessageAPI.Controllers
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(PagedList<Message>))]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public ActionResult <PagedList<Message>> FindMessages(int page, int pageSize)
+        public ActionResult<PagedList<Message>> FindMessages(int page, int pageSize)
         {
 
             return _messageController.GetMessages(page, pageSize);
@@ -63,20 +59,6 @@ namespace MessageAPI.Controllers
         public void DeleteMessage(int id)
         {
             _messageController.DeleteMessageAsync(id);
-        }
-
-
-        private T Execute<T>(Action<T> action, string methodName, params object[] args) where T : new()
-        {
-            _logger.LogInformation("Entering {0}({1})", methodName, string.Join(", ", args));
-
-            T response = new T();
-
-            action(response);
-
-            _logger.LogInformation("Exiting {0} with {1}", methodName, response);
-
-            return response;
         }
     }
 }
