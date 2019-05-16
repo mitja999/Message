@@ -29,10 +29,14 @@ namespace MessageAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            //services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
             // Add framework services.
-            services.AddTransient<IMessageService, MessageService.Impl.MessageService>();
+            services.AddSingleton<IMessageService, MessageService.Impl.MessageService>();
+
+            services.AddJwtBearerAuthentication(Configuration);
+
+            services.AddMvc();
 
             // Add DbContext using SQL Server Provider
             services.AddDbContext<IMessageDbContext, MessageDbContext>(options =>
@@ -64,7 +68,7 @@ namespace MessageAPI
             ////implementation of error handling
             app.UseMiddleware<ErrorHandlingMiddleware>();
 
-            ////app.UseAuthorization();
+            app.UseAuthentication();
 
             ////enable CORS
             app.UseCors("MyPolicy");
