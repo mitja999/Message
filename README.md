@@ -1,5 +1,9 @@
-Send Message Project, using .net core 3 and 7.2
+Send Message Project, using .net core 2.1 and 7.2
 
+
+
+API documentation:
 https://ttmessageapi.azurewebsites.net/swagger/index.html
 
+Test web application:
 https://ttmessagegui.azurewebsites.net/
