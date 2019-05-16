@@ -22,45 +22,74 @@ namespace MessageAPI.Controllers
             _logger = logger;
         }
 
-        // GET api/message?page=0&pageSize=10
+        /// <summary>
+        /// Get All Messages
+        /// </summary>
+        /// <param name="page"></param>
+        /// <param name="pageSize"></param>
+        /// <returns></returns>
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(PagedList<Message>))]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public ActionResult<PagedList<Message>> FindMessages(int page, int pageSize)
+        public ActionResult<PagedList<Message>> GetAllMessages(int page, int pageSize)
         {
 
             return _messageController.GetMessages(page, pageSize);
 
         }
 
-        // GET api/message/5
+        /// <summary>
+        /// Get Message
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [Authorize]
         [HttpGet("{id}")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(PagedList<Message>))]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public ActionResult<MessageExtended> GetMessageExtended(int id)
         {
             return _messageController.GetMessageById(id);
         }
 
-        // POST api/message
+        /// <summary>
+        /// Create Message
+        /// </summary>
+        /// <param name="messageExtended"></param>
+        /// <returns></returns>
         [Authorize(Roles = "admin")]
         [HttpPost]
+        [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(PagedList<Message>))]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult<Message>> CreateMessageAsync([FromBody] MessageExtended messageExtended)
         {
             return await _messageController.CreateMessageAsync(messageExtended);
         }
 
-        // PUT api/message/5
+        /// <summary>
+        /// Update Message
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="message"></param>
+        /// <returns></returns>
         [Authorize(Roles = "admin")]
         [HttpPut("{id}")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(PagedList<Message>))]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult<Message>> UpdateMessage(int id, [FromBody]  Message message)
         {
             return await _messageController.UpdateMessageAsync(message);
 
         }
 
-        // DELETE api/message/5
+        /// <summary>
+        /// Delete Message
+        /// </summary>
+        /// <param name="id"></param>
         [Authorize(Roles = "admin")]
         [HttpDelete("{id}")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(PagedList<Message>))]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public void DeleteMessage(int id)
         {
             _messageController.DeleteMessageAsync(id);
@@ -68,8 +97,15 @@ namespace MessageAPI.Controllers
 
 
         //TODO: put in new controller , dummy implementation
-        // Post api/message/5
+        /// <summary>
+        /// Authenticate WebUser
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="webuser"></param>
+        /// <returns></returns>
         [HttpPost("Authenticate")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(WebUser))]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public ActionResult<WebUser> Authenticate(int id, [FromBody]  WebUser webuser)
         {
             if (webuser.Username == "admin")

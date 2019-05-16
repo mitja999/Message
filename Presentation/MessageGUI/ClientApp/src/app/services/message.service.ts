@@ -11,6 +11,7 @@ export class MessageService {
     this.apiHost = apiHost;
   }
 
+  //get messages
   getMessages(page, pageSize) {
     return this.http.get<PageList>(this.apiHost + 'api/Message?page=' + page + '&pageSize=' + pageSize);
   }

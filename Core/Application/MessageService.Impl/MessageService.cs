@@ -49,6 +49,11 @@ namespace MessageService.Impl
             return result;
         }
 
+        /// <summary>
+        /// Get Message By Id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public MessageExtended GetMessageById(int id)
         {
 
@@ -76,6 +81,11 @@ namespace MessageService.Impl
             return result;
         }
 
+        /// <summary>
+        /// Create Message Async
+        /// </summary>
+        /// <param name="messageExtended"></param>
+        /// <returns></returns>
         public async Task<Message> CreateMessageAsync(MessageExtended messageExtended)
         {
             var result = await ExecuteAsync<Message>(async (message) =>
@@ -98,6 +108,11 @@ namespace MessageService.Impl
             return result;
         }
 
+        /// <summary>
+        /// Update Message Async
+        /// </summary>
+        /// <param name="message"></param>
+        /// <returns></returns>
         public async Task<Message> UpdateMessageAsync(Message message)
         {
             var result = await ExecuteAsync<Message>(async (mes) =>
@@ -117,6 +132,10 @@ namespace MessageService.Impl
             return result;
         }
 
+        /// <summary>
+        /// Delete Message Async
+        /// </summary>
+        /// <param name="id"></param>
         public async void DeleteMessageAsync(int id)
         {
             await ExecuteAsync<Message>(async (message) =>

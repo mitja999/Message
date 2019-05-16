@@ -11,7 +11,6 @@ import { AuthenticationService } from '../../services';
 })
 export class LoginComponent implements OnInit {
   loginForm: FormGroup;
-  loading = false;
   submitted = false;
   returnUrl: string;
   error = '';
@@ -23,6 +22,7 @@ export class LoginComponent implements OnInit {
     private authenticationService: AuthenticationService
   ) { }
 
+  //added validators
   ngOnInit() {
     this.loginForm = this.formBuilder.group({
       username: ['', Validators.required],
@@ -39,15 +39,14 @@ export class LoginComponent implements OnInit {
   // convenience getter for easy access to form fields
   get f() { return this.loginForm.controls; }
 
+  //login user
   onSubmit() {
     this.submitted = true;
 
-    // stop here if form is invalid
     if (this.loginForm.invalid) {
       return;
     }
 
-    this.loading = true;
     this.authenticationService.login(this.f.username.value, this.f.password.value)
       .pipe(first())
       .subscribe(
@@ -55,8 +54,8 @@ export class LoginComponent implements OnInit {
           this.router.navigate([this.returnUrl]);
         },
         error => {
-          this.error = error;
-          this.loading = false;
+
+          this.error = 'login failed';
         });
   }
 }
