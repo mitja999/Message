@@ -1,4 +1,4 @@
-Send Message Project, using .net core 2.1 and 7.2
+Send Email, SMS or Telegram messages, using .net core 2.1 and 7.2
 
 
 
