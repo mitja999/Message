@@ -1,4 +1,4 @@
-# Send Email, SMS or Telegram messages, using .net core 2.1 and 7.2
+# Send Email, SMS or Telegram messages, using .net core 2.1 and Angular 7.2
 
 # Build instruction:
 -For MessageAPI use Visual studio or commands defined on https://docs.microsoft.com/en-us/dotnet/core/build/
